@@ -165,7 +165,7 @@ Data Engineering    ███████░░░░░░░░░░░░░
 
 <div align="center">
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Hassan%20Ahmed-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)]([https://linkedin.com/in/YOUR_LINKEDIN](https://www.linkedin.com/in/hassan-ahmed-98304030a/))
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Hassan%20Ahmed-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/hassan-ahmed-98304030a/)
 [![Email](https://img.shields.io/badge/Email-your.email@gmail.com-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:your.email@gmail.com)
 [![Portfolio](https://img.shields.io/badge/Portfolio-Live%20Dashboard-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://hassan-chinook.streamlit.app/)
 [![GitHub](https://img.shields.io/badge/GitHub-Hassan141998-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Hassan141998)
