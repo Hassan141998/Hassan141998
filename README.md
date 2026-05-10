@@ -17,7 +17,7 @@
 ```python
 hassan = {
     "role"      : "Data Scientist & SQL Analyst",
-    "location"  : "Karachi, Pakistan 🇵🇰",
+    "location"  : "Sadiqabad, Pakistan",
     "focus"     : ["Data Analysis", "Business Intelligence", "Machine Learning"],
     "tools"     : ["Python", "SQL", "Streamlit", "pandas", "scikit-learn"],
     "currently" : "Building end-to-end data projects with real business impact",
@@ -28,7 +28,7 @@ hassan = {
 - 🔭 Currently working on **[Chinook Digital Music Store Analysis](https://hassan-chinook.streamlit.app/)** — a full-stack SQL + Python + Streamlit data project
 - 🌱 Learning **Machine Learning**, **Data Engineering**, and **Cloud Databases**
 - 💬 Ask me about **SQL window functions, RFM analysis, Python data pipelines**
-- 📫 Reach me at: **your.email@gmail.com**
+- 📫 Reach me at: **hani141998@gmail.com**
 - ⚡ I believe: *Good data analysis tells a story. Great data analysis drives action.*
 
 ---
