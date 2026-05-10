@@ -5,7 +5,7 @@
 ### Data Scientist | SQL Analyst | Python Developer
 
 [![Profile Views](https://komarev.com/ghpvc/?username=Hassan141998&color=58a6ff&style=flat-square&label=Profile+Views)](https://github.com/Hassan141998)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=flat-square&logo=linkedin)]((https://www.linkedin.com/in/hassan-ahmed-98304030a/))
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/hassan-ahmed-98304030a/)
 [![Live Dashboard](https://img.shields.io/badge/🚀_Live_App-Streamlit-FF4B4B?style=flat-square&logo=streamlit)](https://hassan-chinook.streamlit.app/)
 
 </div>
