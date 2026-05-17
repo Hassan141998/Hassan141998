@@ -1,505 +1,204 @@
 <div align="center">
 
-<img src="https://img.shields.io/badge/-%F0%9F%A7%A0%20SegmentIQ-0d1117?style=for-the-badge&labelColor=0d1117&color=4f8cf7" height="40"/>
-
-# SegmentIQ — Customer Intelligence Platform
-
-**End-to-end K-Means++ customer segmentation system for financial product recommendation.**
-**Built with Flask · scikit-learn · Neon PostgreSQL · Deployed on Vercel.**
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=180&section=header&text=Hassan%20Ahmed&fontSize=42&fontColor=fff&animation=twinkling&fontAlignY=32&desc=Data%20Scientist%20%7C%20ML%20Engineer%20%7C%20Python%20Developer&descAlignY=55&descSize=16" width="100%"/>
 
 <br/>
 
-[![Live Demo](https://img.shields.io/badge/▲%20Live%20Demo-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://segment-iq-customer-segmentation-in.vercel.app)
-[![GitHub](https://img.shields.io/badge/GitHub-Hassan141998-181717?style=for-the-badge&logo=github)](https://github.com/Hassan141998)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Hassan%20Ahmed-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/hassan-ahmed-98304030a/)
-[![Upwork](https://img.shields.io/badge/Upwork-Available%20for%20Hire-6FDA44?style=for-the-badge&logo=upwork&logoColor=white)](https://www.upwork.com)
-
-<br/>
-
-![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
-![Flask](https://img.shields.io/badge/Flask-3.0-000000?logo=flask)
-![scikit-learn](https://img.shields.io/badge/scikit--learn-1.4-F7931E?logo=scikit-learn&logoColor=white)
-![Neon](https://img.shields.io/badge/Neon-PostgreSQL-00E599?logo=postgresql&logoColor=white)
-![Vercel](https://img.shields.io/badge/Vercel-Deployed-000000?logo=vercel)
-![License](https://img.shields.io/badge/License-MIT-22C55E)
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=22&duration=3000&pause=1000&color=4F8CF7&center=true&vCenter=true&multiline=true&width=600&height=100&lines=Building+intelligent+systems+from+data.;ML+%7C+NLP+%7C+Data+Engineering+%7C+APIs.;Turning+numbers+into+decisions.)](https://git.io/typing-svg)
 
 </div>
 
 ---
 
-## 📌 Table of Contents
+## 👋 About Me
 
-- [Overview](#-overview)
-- [Live Demo](#-live-demo)
-- [Features](#-features)
-- [Architecture](#-architecture)
-- [Project Structure](#-project-structure)
-- [ML Pipeline](#-ml-pipeline)
-- [Dashboard Sections](#-dashboard-sections)
-- [API Reference](#-api-reference)
-- [Customer Segments](#-customer-segments)
-- [Tech Stack](#-tech-stack)
-- [Local Setup](#️-local-setup)
-- [Deploy to Vercel + Neon](#️-deploy-to-vercel--neon)
-- [Model Results](#-model-results)
-- [Author](#-author)
+I'm **Hassan Ahmed**, a Data Scientist and ML Engineer based in Pakistan.
+I build end-to-end machine learning systems — from raw data pipelines to production-deployed models — with a focus on financial analytics, computer vision, and NLP.
 
----
-
-## 🧠 Overview
-
-**SegmentIQ** is a production-grade machine learning system that segments financial customers into distinct behavioral groups using **K-Means++ clustering**. It automatically selects the optimal number of clusters using a composite scoring system, profiles each segment, and recommends personalized financial products in real time.
-
-The project demonstrates a complete data science workflow — from synthetic data generation and feature engineering through model training, evaluation, and deployment — all wrapped in a polished, interactive web dashboard.
-
-> Built as a portfolio project showcasing ML engineering, full-stack development, cloud deployment, and database integration skills.
-
----
-
-## 🌐 Live Demo
-
-**[▲ segment-iq-customer-segmentation-in.vercel.app](https://segment-iq-customer-segmentation-in.vercel.app)**
-
-| Section | What you can do |
-|---|---|
-| **Overview** | View KPI metrics, cluster distribution, 2D PCA scatter, multi-metric evaluation |
-| **Segments** | Explore financial profiles and product recommendations per segment |
-| **Analytics** | Interact with 3D scatter, radar chart, feature importance, elbow curve |
-| **Predict** | Enter customer data, get segment classification + recommendations instantly |
-| **Customers** | Browse 1,000 segmented customers, filter by segment, export to CSV |
-| **History** | See last 20 real-time predictions stored in Neon PostgreSQL |
-| **Settings** | Retrain the model and view run history |
-
----
-
-## ✨ Features
-
-### Machine Learning Pipeline
-- **K-Means++** clustering with `n_init=20` for stable centroid initialization
-- **Automatic optimal K selection** via composite metric scoring:
-  - Silhouette Score (40% weight)
-  - Calinski-Harabász Index (30% weight)
-  - Davies-Bouldin Index (30% weight)
-- **RobustScaler** preprocessing — resistant to financial data outliers
-- **PCA** dimensionality reduction for 2D and visualization (~74% variance retained)
-- **Feature engineering** — 5 derived financial ratios from 11 raw features
-- Full evaluation suite: Silhouette · Davies-Bouldin · Calinski-Harabász · Elbow/Inertia
-
-### Dashboard & Visualization
-- 7-section single-page application (SPA) — no page reloads
-- Interactive **Plotly.js** charts: 2D scatter, 3D scatter, radar, bar, multi-line metrics, elbow
-- **Dark professional UI** — Space Grotesk + JetBrains Mono typography
-- Segment profile cards with avg income, age, credit score, savings, and product recommendations
-- Real-time **customer classifier** form with instant API response
-- Paginated, filterable customer table with CSV export
-
-### Infrastructure & Deployment
-- **Vercel-optimized architecture**: model trained at build time, results served as static JSON — zero cold start latency for normal requests
-- **Neon PostgreSQL** persistence: customers, predictions, and model runs stored serverlessly
-- **Graceful degradation**: runs in local/in-memory mode when no `DATABASE_URL` is set
-- 14 REST API endpoints
-- `python-dotenv` for local environment management
-
----
-
-## 🏗️ Architecture
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│                      VERCEL BUILD TIME                      │
-│  build.py → ml/pipeline.py → static/precomputed.json       │
-│  (train model, serialize results — happens once per deploy) │
-└───────────────────────────┬─────────────────────────────────┘
-                            │
-┌───────────────────────────▼─────────────────────────────────┐
-│                     VERCEL RUNTIME                          │
-│                                                             │
-│  Browser ──HTTP──► Flask (app.py)                          │
-│                         │                                   │
-│            ┌────────────┼────────────┐                      │
-│            │            │            │                      │
-│      Read JSON     sklearn lazy   Neon DB                   │
-│   (instant, 248KB) (predict only) (persist)                 │
-└─────────────────────────────────────────────────────────────┘
-```
-
-**Key design decision:** scikit-learn (270MB) is a build-time dependency only. At runtime, the Flask app reads a pre-trained 248KB JSON file — making every page load instant. sklearn is only imported lazily for `/api/predict` and `/api/retrain`.
-
----
-
-## 🗂️ Project Structure
-
-```
-segmentiq/
-│
-├── app.py                    # Flask application — Vercel entry point (14 API routes)
-├── build.py                  # Build-time script: trains model → static/precomputed.json
-├── database.py               # Neon PostgreSQL integration (psycopg2)
-│
-├── ml/
-│   ├── __init__.py
-│   └── pipeline.py           # Full ML pipeline:
-│                             #   generate_data() → engineer_features() → train()
-│                             #   → evaluate → build_results() → predict()
-│
-├── static/
-│   └── precomputed.json      # Pre-trained model results (248KB, committed to repo)
-│
-├── templates/
-│   └── dashboard.html        # Single-file SPA: 7 sections, Plotly.js charts
-│
-├── vercel.json               # Vercel deployment: buildCommand + routes
-├── requirements.txt          # flask · scikit-learn · pandas · numpy · psycopg2 · dotenv
-├── .env.example              # Template for local DATABASE_URL setup
-├── .gitignore
-└── README.md
-```
-
----
-
-## 🤖 ML Pipeline
-
-### 1. Data Generation
-Generates 1,000 synthetic customers across 6 realistic financial archetypes with controlled statistical distributions:
+I work across the full stack: Python backends, interactive dashboards, cloud deployment on Vercel and AWS, and serverless databases like Neon PostgreSQL. I'm available for freelance projects on Upwork and direct contracts.
 
 ```python
-from ml.pipeline import generate_data
-df = generate_data(seed=42)
-# 1,000 rows × 11 features
-```
-
-### 2. Feature Engineering
-Derives 5 financial ratio features from raw inputs:
-
-| Engineered Feature | Formula |
-|---|---|
-| `savings_to_income_ratio` | savings_balance / annual_income |
-| `investment_to_income_ratio` | investment_amount / annual_income |
-| `loan_to_income_ratio` | loan_amount / annual_income |
-| `wealth_index` | (savings + investment − loan) / income |
-| `engagement_activity_score` | 0.4×digital + 0.4×transactions + 0.2×products×5 |
-
-### 3. Preprocessing
-```python
-scaler = RobustScaler()          # handles financial outliers
-X_scaled = scaler.fit_transform(X)
-pca = PCA(n_components=2)        # for visualization
-X_pca = pca.fit_transform(X_scaled)
-```
-
-### 4. Optimal K Selection
-Composite scoring across K = 2…9:
-
-```
-Composite Score = 0.40 × silhouette_norm
-               + 0.30 × calinski_harabasz_norm
-               + 0.30 × (1 − davies_bouldin_norm)
-```
-
-### 5. Training
-```python
-model = KMeans(n_clusters=optimal_k, init="k-means++", n_init=20, random_state=42)
-model.fit(X_scaled)
-```
-
-### 6. Real-time Prediction
-```python
-from ml.pipeline import predict
-result = predict({
-    "age": 42, "annual_income": 95000, "credit_score": 740,
-    "savings_balance": 45000, "investment_amount": 30000, ...
-})
-# → {"cluster": 0, "segment_name": "High-Value Investors", "recommendations": [...]}
-```
-
----
-
-## 📊 Dashboard Sections
-
-| Section | Charts / Features |
-|---|---|
-| **Overview** | 4 KPI cards · Cluster distribution bar chart · 2D PCA scatter · Multi-metric line chart (Silhouette, DB, CH, Inertia) |
-| **Segments** | Profile cards per cluster — size, avg income, age, savings, credit score, color-coded + product recommendation tags |
-| **Analytics** | Interactive 3D scatter (Income × Savings × Investment) · Radar overlay chart · Feature importance horizontal bar · Elbow curve with fill |
-| **Predict** | 11-field customer form → POST `/api/predict` → segment name + color + recommendation list |
-| **Customers** | Paginated table (50/page) · Cluster filter dropdown · Colored segment badges · CSV export |
-| **History** | Prediction log from Neon DB — age, income, credit, segment, timestamp |
-| **Settings** | Retrain button (POST `/api/retrain`) · Model run history table · System info grid |
-
----
-
-## 🌐 API Reference
-
-| Method | Endpoint | Description |
-|---|---|---|
-| `GET` | `/api/summary` | KPI metrics + all cluster profiles |
-| `GET` | `/api/scatter2d` | PCA 2D coordinates per cluster |
-| `GET` | `/api/scatter3d` | Income × Savings × Investment 3D data |
-| `GET` | `/api/radar` | Normalized radar chart feature data |
-| `GET` | `/api/elbow` | Inertia values for K = 2…10 |
-| `GET` | `/api/metrics` | All evaluation metrics per K value |
-| `GET` | `/api/feature_importance` | Between/within variance ratio scores |
-| `POST` | `/api/predict` | Classify a new customer into a segment |
-| `POST` | `/api/retrain` | Re-run full training pipeline |
-| `GET` | `/api/customers` | Paginated + filterable customer list |
-| `GET` | `/api/history` | Last 20 predictions (Neon DB) |
-| `GET` | `/api/model_runs` | Training run history (Neon DB) |
-| `GET` | `/api/export` | Download segmented customers as CSV |
-| `GET` | `/api/health` | Status: DB connection, active K, data source |
-
-### Example: Classify a customer
-
-```bash
-curl -X POST https://segment-iq-customer-segmentation-in.vercel.app/api/predict \
-  -H "Content-Type: application/json" \
-  -d '{
-    "age": 42,
-    "annual_income": 95000,
-    "savings_balance": 45000,
-    "credit_score": 740,
-    "monthly_transactions": 55,
-    "loan_amount": 120000,
-    "investment_amount": 30000,
-    "risk_appetite_score": 3.2,
-    "years_as_customer": 8,
-    "num_products": 4,
-    "digital_engagement_score": 72
-  }'
-```
-
-**Response:**
-```json
-{
-  "cluster": 0,
-  "segment_name": "High-Value Investors",
-  "color": "#FF6B6B",
-  "recommendations": [
-    "Premium Investment Portfolio",
-    "Wealth Management Advisory",
-    "Private Banking",
-    "Tax Optimization Services"
-  ]
+hassan = {
+    "role":       "Data Scientist & ML Engineer",
+    "focus":      ["Machine Learning", "NLP", "Data Engineering", "API Development"],
+    "stack":      ["Python", "scikit-learn", "Flask", "PostgreSQL", "Pandas", "Plotly"],
+    "cloud":      ["Vercel", "AWS", "Neon", "GitHub Actions"],
+    "available":  True,
+    "location":   "Pakistan 🇵🇰",
 }
 ```
 
 ---
 
-## 🎯 Customer Segments
+## 🔗 Connect with Me
 
-| Cluster | Segment | Typical Profile | Recommended Products |
-|---|---|---|---|
-| **0** | High-Value Investors | Age 45+ · $120K income · $80K savings · Credit 780 · Low risk | Wealth Management · Private Banking · Tax Optimization |
-| **1** | Young Professionals | Age 28 · $65K income · High transactions · Digital-first | Growth Fund · Digital Banking · Career Insurance |
-| **2** | Conservative Retirees | Age 65 · Fixed income · $120K savings · Very low risk | Fixed Bonds · Annuities · Healthcare Insurance |
-| **3** | Middle-Class Families | Age 40 · $75K income · Mortgage-focused · Moderate risk | Life Insurance · Education Savings · Home Mortgage |
-| **4** | Budget-Conscious Savers | Age 35 · $30K income · Careful spenders · Low products | High-Yield Savings · Secured Credit Card · Micro-Investment |
-| **5** | High Spenders | Age 33 · $90K income · Low savings · 120 txns/month | Cashback Cards · BNPL · Lifestyle Insurance · Rewards |
+<div align="center">
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Hassan%20Ahmed-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/hassan-ahmed-98304030a/)
+[![GitHub](https://img.shields.io/badge/GitHub-Hassan141998-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Hassan141998)
+[![Upwork](https://img.shields.io/badge/Upwork-Hire%20Me-6FDA44?style=for-the-badge&logo=upwork&logoColor=white)](https://www.upwork.com)
+[![Email](https://img.shields.io/badge/Email-Contact%20Me-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:your.email@gmail.com)
+
+</div>
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Layer | Technology | Purpose |
-|---|---|---|
-| **ML** | scikit-learn 1.4 | K-Means++, RobustScaler, PCA, metrics |
-| **Data** | pandas 2.1 · NumPy 1.26 | Feature engineering, data manipulation |
-| **Backend** | Flask 3.0 | REST API, routing, templating |
-| **Database** | Neon PostgreSQL (psycopg2) | Persist customers, predictions, model runs |
-| **Frontend** | Vanilla JS · Plotly.js 2.27 | Interactive charts, SPA navigation |
-| **Fonts** | Space Grotesk · JetBrains Mono | Professional dark UI typography |
-| **Persistence** | joblib | Model serialization (local dev) |
-| **Env** | python-dotenv | Local `.env` loading |
-| **Deployment** | Vercel | Serverless Flask hosting |
-| **CI/CD** | GitHub → Vercel | Auto-deploy on every `git push` |
+<div align="center">
+
+### Languages & Core
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![SQL](https://img.shields.io/badge/SQL-4479A1?style=for-the-badge&logo=postgresql&logoColor=white)
+![R](https://img.shields.io/badge/R-276DC3?style=for-the-badge&logo=r&logoColor=white)
+![Bash](https://img.shields.io/badge/Bash-4EAA25?style=for-the-badge&logo=gnubash&logoColor=white)
+
+### Machine Learning & Data Science
+![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)
+![TensorFlow](https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white)
+![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white)
+![NumPy](https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white)
+![XGBoost](https://img.shields.io/badge/XGBoost-FF6600?style=for-the-badge&logo=xgboost&logoColor=white)
+
+### Visualization
+![Plotly](https://img.shields.io/badge/Plotly-3F4F75?style=for-the-badge&logo=plotly&logoColor=white)
+![Seaborn](https://img.shields.io/badge/Seaborn-4C72B0?style=for-the-badge&logo=python&logoColor=white)
+![Matplotlib](https://img.shields.io/badge/Matplotlib-11557C?style=for-the-badge&logo=python&logoColor=white)
+![Power BI](https://img.shields.io/badge/Power%20BI-F2C811?style=for-the-badge&logo=powerbi&logoColor=black)
+
+### Backend & APIs
+![Flask](https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)
+![REST API](https://img.shields.io/badge/REST%20API-FF6C37?style=for-the-badge&logo=postman&logoColor=white)
+
+### Databases & Cloud
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
+![Neon](https://img.shields.io/badge/Neon-00E599?style=for-the-badge&logo=postgresql&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
+![AWS](https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white)
+
+### Tools & Workflow
+![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
+![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)
+![PyCharm](https://img.shields.io/badge/PyCharm-000000?style=for-the-badge&logo=pycharm&logoColor=white)
+![Jupyter](https://img.shields.io/badge/Jupyter-F37626?style=for-the-badge&logo=jupyter&logoColor=white)
+![VS Code](https://img.shields.io/badge/VS%20Code-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+
+</div>
 
 ---
 
-## ⚙️ Local Setup
-
-### Prerequisites
-- Python 3.9+
-- pip
-
-### 1. Clone
-```bash
-git clone https://github.com/Hassan141998/SegmentIQ-Customer-Segmentation-Intelligence-Platform.git
-cd SegmentIQ-Customer-Segmentation-Intelligence-Platform
-```
-
-### 2. Virtual environment
-```powershell
-# Windows PowerShell
-python -m venv .venv
-.venv\Scripts\activate
-```
-```bash
-# macOS / Linux
-python -m venv .venv
-source .venv/bin/activate
-```
-
-### 3. Install dependencies
-```bash
-pip install -r requirements.txt
-```
-
-### 4. Environment variables (optional — for Neon DB)
-```bash
-cp .env.example .env
-# Edit .env and paste your Neon DATABASE_URL
-```
-
-### 5. Build and run
-```bash
-# Step 1: train model and generate precomputed.json
-python build.py
-
-# Step 2: start Flask
-python app.py
-```
-
-Open **http://127.0.0.1:5000** 🚀
-
-> The app works without a `DATABASE_URL` — it shows a yellow "Local Mode" badge and uses in-memory data only.
-
----
-
-## ☁️ Deploy to Vercel + Neon
-
-### Step 1 — Create Neon Database
-1. Go to **[neon.tech](https://neon.tech)** → Sign up → **New Project**
-2. Copy your **Connection String** (`postgresql://...`)
-3. Tables are auto-created on first request via `init_db()` — no migrations needed
-
-### Step 2 — Push to GitHub
-```powershell
-# Windows PowerShell — run each line separately
-git init
-git add .
-git commit -m "feat: SegmentIQ v3"
-git branch -M main
-git remote add origin https://github.com/Hassan141998/SegmentIQ-Customer-Segmentation-Intelligence-Platform.git
-git push -u origin main
-```
-
-### Step 3 — Deploy on Vercel
-1. Go to **[vercel.com](https://vercel.com)** → **Add New Project**
-2. Import your GitHub repository
-3. Framework Preset: **Other**
-4. Add environment variable:
-   ```
-   DATABASE_URL = postgresql://neondb_owner:...@ep-xxxx.neon.tech/neondb?sslmode=require
-   ```
-5. Click **Deploy** ✅
-
-### What happens at build time
-```
-🔧 SegmentIQ build: training model...
-✅ Precomputed results saved → static/precomputed.json (248 KB)
-   Clusters: 2 | Silhouette: 0.556 | Customers: 1,000
-```
-
-Every `git push` triggers an automatic redeploy.
-
-### Step 4 — Seed Neon DB
-After first deploy, visit `/api/retrain` (POST) once to seed your Neon DB with all 1,000 customers.
-
----
-
-## 📈 Model Results
-
-| Metric | Value | Interpretation |
-|---|---|---|
-| **Silhouette Score** | `0.556` | Good cluster separation (range: −1 to 1) |
-| **Davies-Bouldin Index** | `0.702` | Compact clusters (lower = better) |
-| **Calinski-Harabász Score** | `1048` | Well-defined clusters (higher = better) |
-| **PCA Explained Variance** | `74.1%` | 2 components capture most information |
-| **Dataset** | 1,000 customers | 11 raw + 5 engineered = 16 total features |
-| **Optimal K** | Auto-selected | Composite scoring across K = 2…9 |
-
----
-
-## 🗃️ Database Schema (Neon PostgreSQL)
-
-```sql
--- Segmented customer records
-CREATE TABLE customers (
-    id                       SERIAL PRIMARY KEY,
-    customer_id              TEXT UNIQUE,
-    age                      INTEGER,
-    annual_income            NUMERIC,
-    savings_balance          NUMERIC,
-    credit_score             INTEGER,
-    monthly_transactions     INTEGER,
-    loan_amount              NUMERIC,
-    investment_amount        NUMERIC,
-    risk_appetite_score      NUMERIC,
-    years_as_customer        INTEGER,
-    num_products             INTEGER,
-    digital_engagement_score NUMERIC,
-    cluster                  INTEGER,
-    segment_name             TEXT,
-    created_at               TIMESTAMPTZ DEFAULT NOW()
-);
-
--- Real-time prediction log
-CREATE TABLE predictions (
-    id              SERIAL PRIMARY KEY,
-    age             INTEGER,
-    annual_income   NUMERIC,
-    credit_score    INTEGER,
-    savings_balance NUMERIC,
-    cluster         INTEGER,
-    segment_name    TEXT,
-    recommendations JSONB,
-    created_at      TIMESTAMPTZ DEFAULT NOW()
-);
-
--- Model training history
-CREATE TABLE model_runs (
-    id                  SERIAL PRIMARY KEY,
-    optimal_k           INTEGER,
-    silhouette_score    NUMERIC,
-    davies_bouldin      NUMERIC,
-    calinski_harabasz   NUMERIC,
-    n_customers         INTEGER,
-    run_at              TIMESTAMPTZ DEFAULT NOW()
-);
-```
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Please:
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/your-feature`
-3. Commit your changes: `git commit -m "feat: description"`
-4. Push: `git push origin feature/your-feature`
-5. Open a Pull Request
-
----
-
-## 📄 License
-
-This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
-
----
-
-## 👤 Author
+## 📊 GitHub Stats
 
 <div align="center">
 
-### Hassan Ahmed
-**Data Scientist & ML Engineer**
+<img src="https://github-readme-stats.vercel.app/api?username=Hassan141998&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=4f8cf7&icon_color=4f8cf7&text_color=e2e8f8&rank_icon=github" height="165"/>
+<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Hassan141998&layout=compact&theme=tokyonight&hide_border=true&bg_color=0d1117&title_color=4f8cf7&text_color=e2e8f8&langs_count=8" height="165"/>
 
-[![GitHub](https://img.shields.io/badge/GitHub-Hassan141998-181717?style=for-the-badge&logo=github)](https://github.com/Hassan141998)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Hassan%20Ahmed-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/hassan-ahmed-98304030a/)
-[![Upwork](https://img.shields.io/badge/Upwork-Hire%20Me-6FDA44?style=for-the-badge&logo=upwork&logoColor=white)](https://www.upwork.com)
+<br/>
 
-**Available for freelance projects in:**
-Machine Learning · Data Science · Python Backend · Dashboard Development · MLOps
+<img src="https://github-readme-streak-stats.herokuapp.com?user=Hassan141998&theme=tokyonight&hide_border=true&background=0d1117&ring=4f8cf7&fire=ff6b7a&currStreakLabel=4f8cf7" height="165"/>
+
+</div>
+
+---
+
+## 🚀 Featured Projects
+
+---
+
+### 🧠 SegmentIQ — Customer Intelligence Platform
+
+> End-to-end K-Means++ customer segmentation system for financial product recommendation.
+> Built with Flask · scikit-learn · Neon PostgreSQL · Deployed on Vercel.
+
+[![Live Demo](https://img.shields.io/badge/▲%20Live%20Demo-000000?style=flat-square&logo=vercel&logoColor=white)](https://segment-iq-customer-segmentation-in.vercel.app)
+[![Repo](https://img.shields.io/badge/GitHub-View%20Repo-181717?style=flat-square&logo=github)](https://github.com/Hassan141998/SegmentIQ-Customer-Segmentation-Intelligence-Platform)
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
+![Flask](https://img.shields.io/badge/Flask-000000?style=flat-square&logo=flask)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=flat-square&logo=scikit-learn&logoColor=white)
+![Neon](https://img.shields.io/badge/Neon-00E599?style=flat-square&logo=postgresql&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel)
+
+**What it does:**
+- Clusters 1,000 financial customers into behavioral segments using K-Means++ with automatic optimal-K detection via composite metric scoring (Silhouette + Calinski-Harabász + Davies-Bouldin)
+- Generates personalized financial product recommendations per segment in real time
+- Full interactive dark dashboard: 2D/3D scatter plots, radar profiles, feature importance, elbow curve, paginated customer table
+- REST API with 14 endpoints; predictions and model runs persisted in Neon PostgreSQL
+- Vercel-optimized: model pre-trained at build time → 248KB JSON served at runtime (zero cold start latency)
+
+**Results:** Silhouette `0.556` · Davies-Bouldin `0.702` · Calinski-Harabász `1048` · PCA variance `74%`
+
+---
+
+### 📈 [Your Next Project Title]
+
+> Short one-line description of what this project does and its business value.
+
+[![Repo](https://img.shields.io/badge/GitHub-View%20Repo-181717?style=flat-square&logo=github)](#)
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
+
+**What it does:**
+- Bullet point one — key capability
+- Bullet point two — outcome or metric
+- Bullet point three — tech highlight
+
+---
+
+### 🔍 [Your Next Project Title]
+
+> Short one-line description of what this project does and its business value.
+
+[![Repo](https://img.shields.io/badge/GitHub-View%20Repo-181717?style=flat-square&logo=github)](#)
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
+
+**What it does:**
+- Bullet point one — key capability
+- Bullet point two — outcome or metric
+- Bullet point three — tech highlight
+
+---
+
+## 💼 Services & Expertise
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                                                                 │
+│  🤖  Machine Learning          📊  Data Analysis & EDA         │
+│      Classification, Regression,    Pandas, statistical         │
+│      Clustering, Time Series,       analysis, business          │
+│      Anomaly Detection              intelligence reports        │
+│                                                                 │
+│  🧠  NLP & Text Analytics      🌐  API & Backend Dev           │
+│      Sentiment analysis,            Flask, FastAPI,             │
+│      Named entity recognition,      REST APIs, PostgreSQL,      │
+│      Text classification,           Neon, Vercel, AWS           │
+│      LLM integration                                            │
+│                                                                 │
+│  📈  Dashboards & Viz          🔧  MLOps & Deployment          │
+│      Plotly, Seaborn,               Model serialization,        │
+│      interactive charts,            joblib, Docker,             │
+│      Power BI, business KPIs        CI/CD, GitHub Actions       │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 📬 Hire Me
+
+I'm open to **freelance projects**, **consulting**, and **remote contract roles**.
+
+Whether you need a complete ML system built from scratch, a data pipeline cleaned up, a predictive model deployed, or an analytics dashboard — I can help.
+
+<div align="center">
+
+[![LinkedIn](https://img.shields.io/badge/Message%20on%20LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/hassan-ahmed-98304030a/)
+[![Upwork](https://img.shields.io/badge/Hire%20on%20Upwork-6FDA44?style=for-the-badge&logo=upwork&logoColor=white)](https://www.upwork.com)
+[![GitHub](https://img.shields.io/badge/Follow%20on%20GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Hassan141998)
 
 </div>
 
@@ -507,8 +206,8 @@ Machine Learning · Data Science · Python Backend · Dashboard Development · M
 
 <div align="center">
 
-*Built with Python · scikit-learn · Flask · Neon PostgreSQL · Vercel*
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=100&section=footer" width="100%"/>
 
-**⭐ Star this repo if you found it useful!**
+*"Data is the new oil. Insight is the refinery."*
 
 </div>
