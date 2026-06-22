@@ -22,7 +22,7 @@
 class HassanAhmed:
     def __init__(self):
         self.name       = "Hassan Ahmed"
-        self.location   = "Bahawalpur, Pakistan 🇵🇰"
+        self.location   = "Sadiqabad, Pakistan 🇵🇰"
         self.education  = "BSCS 2023–2025 · Islamia University of Bahawalpur"
         self.role       = "Full Stack Developer & AI/ML Engineer"
         self.email      = "hani141998@gmail.com"
